@@ -1,0 +1,3 @@
+# Exact versions used for the archived CPU experiment; the CUDA wheel build was not used for computation.
+torch==2.12.0
+Pillow==10.4.0

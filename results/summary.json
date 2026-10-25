@@ -1,0 +1,66 @@
+{
+  "environment": {
+    "python": "3.12.7",
+    "pytorch": "2.12.0+cu126",
+    "device": "cpu",
+    "dtype": "float32 for training; float64 for equivalence checks",
+    "seed": 20261025
+  },
+  "fixed_logits_equivalence": {
+    "loss_by_method": {
+      "manual_gather": 0.8713146358523063,
+      "nll_loss": 0.8713146358523064,
+      "cross_entropy": 0.8713146358523064
+    },
+    "max_abs_loss_difference": 1.1102230246251565e-16,
+    "max_abs_gradient_difference": 0.0
+  },
+  "sequence_padding_check": {
+    "batch_size": 2,
+    "sequence_length": 3,
+    "valid_target_tokens": 5,
+    "mean_nll_manual": 1.5106396180154156,
+    "mean_nll_nll_loss": 1.5106396180154151,
+    "mean_nll_cross_entropy": 1.5106396180154151,
+    "max_abs_difference": 4.440892098500626e-16
+  },
+  "numerical_stability_check": {
+    "naive_softmax_then_log_nonfinite_values": 2,
+    "log_softmax_all_finite": true
+  },
+  "synthetic_classification": {
+    "classes": 3,
+    "features": 2,
+    "train_examples": 288,
+    "test_examples": 72,
+    "samples_per_class": 120,
+    "train_fraction_per_class": 0.8,
+    "model": "torch.nn.Linear(2, 3)",
+    "optimizer": "torch.optim.SGD",
+    "learning_rate": 0.2,
+    "epochs": 120,
+    "batching": "full batch",
+    "loss_by_method": {
+      "manual_gather": {
+        "initial_train_nll": 1.4869357347488403,
+        "final_train_nll": 0.1077757328748703,
+        "final_test_nll": 0.06268997490406036,
+        "test_accuracy": 1.0
+      },
+      "nll_loss": {
+        "initial_train_nll": 1.4869357347488403,
+        "final_train_nll": 0.1077757179737091,
+        "final_test_nll": 0.06268997490406036,
+        "test_accuracy": 1.0
+      },
+      "cross_entropy": {
+        "initial_train_nll": 1.4869357347488403,
+        "final_train_nll": 0.1077757179737091,
+        "final_test_nll": 0.06268997490406036,
+        "test_accuracy": 1.0
+      }
+    },
+    "max_abs_training_curve_difference": 1.1920928955078125e-07,
+    "max_abs_final_parameter_difference": 0.0
+  }
+}
