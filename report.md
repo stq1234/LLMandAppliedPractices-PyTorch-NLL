@@ -4,6 +4,8 @@
 
 负对数似然（negative log-likelihood, NLL）把模型分配给正确类别的概率转化为可优化的标量损失。本实验说明从 logits 计算 NLL 的两种 PyTorch 接口：先使用 `log_softmax` 得到对数概率，再交给 `nll_loss`；或将 logits 直接交给 `cross_entropy`。固定 logits 实验中，两种内置接口与基于 `gather` 的手工计算得到相同损失和梯度。一个三分类线性模型在固定随机种子的合成数据上训练 120 轮，三条训练轨迹重合，最终测试准确率均为 100%。另一个变长序列例子验证了下一词标签移位和 padding 忽略后的 token 平均。极端 logits 检查显示，先算 softmax 再取对数会产生非有限值，而 `log_softmax` 保持有限。
 
+**代码仓库：[https://github.com/stq1234/LLMandAppliedPractices-PyTorch-NLL](https://github.com/stq1234/LLMandAppliedPractices-PyTorch-NLL)。本次实验的代码及相关说明可在该仓库中获取。**
+
 ## 1. 问题与原理
 
 分类模型对输入样本 xₙ 输出每个类别的未归一化分数，即 logits。Softmax 将它们归一化为条件概率；若真实标签为类别 yₙ，最大似然估计等价于最小化真实类别概率的负对数。PyTorch 的 `NLLLoss` 接收对数概率；对整数类别标签，`CrossEntropyLoss`/`cross_entropy` 接收 logits，并将对数 softmax 与 NLL 组合计算。这里比较的条件为无类别权重、无标签平滑和相同的均值归约；概率型软标签等其他设置不包含在该等价性实验中。接口约定见 PyTorch 官方 [NLLLoss](https://docs.pytorch.org/docs/2.14/generated/torch.nn.NLLLoss.html) 和 [cross_entropy](https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.cross_entropy.html) 文档。
@@ -127,4 +129,4 @@ token_nll = F.cross_entropy(
 2. PyTorch Contributors. [torch.nn.functional.cross_entropy](https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.cross_entropy.html). PyTorch Documentation.
 3. PyTorch Contributors. [torch.nn.functional.log_softmax](https://docs.pytorch.org/docs/2.14/generated/torch.nn.functional.log_softmax.html). PyTorch Documentation.
 
-本次实验的代码及相关说明可在该仓库中获取：<https://github.com/stq1234/LLMandAppliedPractices-PyTorch-NLL>。
+本次实验的代码及相关说明可在该仓库中获取：[https://github.com/stq1234/LLMandAppliedPractices-PyTorch-NLL](https://github.com/stq1234/LLMandAppliedPractices-PyTorch-NLL)。
